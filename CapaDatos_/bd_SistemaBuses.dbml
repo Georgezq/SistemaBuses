@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SisBuses" Class="bd_SistemaBusesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=GEORGE-MENDOZA;Initial Catalog=SisBuses;Integrated Security=True" SettingsObjectName="CapaDatos_.Properties.Settings" SettingsPropertyName="SisBusesConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Afiliado" Member="Afiliado">
+    <Type Name="Afiliado">
+      <Column Name="IdAfiliado" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Cedula" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Afiliado_Cobro" Member="Cobro" ThisKey="IdAfiliado" OtherKey="IdAfiliado" Type="Cobro" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Chofer" Member="Chofer">
+    <Type Name="Chofer">
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Sexo" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="TipoLicencia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Edad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Chofer_Pagos" Member="Pagos" ThisKey="IdChofer" OtherKey="IdChofer" Type="Pagos" />
+      <Association Name="Chofer_Unidad" Member="Unidad" ThisKey="IdChofer" OtherKey="IdChofer" Type="Unidad" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cobro" Member="Cobro">
+    <Type Name="Cobro">
+      <Column Name="IdCobros" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdAfiliado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Afiliado_Cobro" Member="Afiliado" ThisKey="IdAfiliado" OtherKey="IdAfiliado" Type="Afiliado" IsForeignKey="true" />
+      <Association Name="Usuario_Cobro" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pagos" Member="Pagos">
+    <Type Name="Pagos">
+      <Column Name="IdPago" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Valor" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Chofer_Pagos" Member="Chofer" ThisKey="IdChofer" OtherKey="IdChofer" Type="Chofer" IsForeignKey="true" />
+      <Association Name="Usuario_Pagos" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Permisos" Member="Permisos">
+    <Type Name="Permisos">
+      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreMenu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Rol_Permisos" Member="Rol" ThisKey="IdRol" OtherKey="IdRol" Type="Rol" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rol" Member="Rol">
+    <Type Name="Rol">
+      <Column Name="IdRol" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Rol_Permisos" Member="Permisos" ThisKey="IdRol" OtherKey="IdRol" Type="Permisos" />
+      <Association Name="Rol_Usuario" Member="Usuario" ThisKey="IdRol" OtherKey="IdRol" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Turno" Member="Turno">
+    <Type Name="Turno">
+      <Column Name="IdTurno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Hora_Inicio" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Hora_terminacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Turno_TurnoUnidad" Member="TurnoUnidad" ThisKey="IdTurno" OtherKey="IdTurno" Type="TurnoUnidad" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TurnoUnidad" Member="TurnoUnidad">
+    <Type Name="TurnoUnidad">
+      <Column Name="IdTurnoUnidad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdTurno" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdUnidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Turno_TurnoUnidad" Member="Turno" ThisKey="IdTurno" OtherKey="IdTurno" Type="Turno" IsForeignKey="true" />
+      <Association Name="Unidad_TurnoUnidad" Member="Unidad" ThisKey="IdUnidad" OtherKey="IdUnidad" Type="Unidad" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Unidad" Member="Unidad">
+    <Type Name="Unidad">
+      <Column Name="IdUnidad" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Placa" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Modelo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Marca" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FechaFabricacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IdRecorrido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdLinea" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Capacidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Unidad_TurnoUnidad" Member="TurnoUnidad" ThisKey="IdUnidad" OtherKey="IdUnidad" Type="TurnoUnidad" />
+      <Association Name="Chofer_Unidad" Member="Chofer" ThisKey="IdChofer" OtherKey="IdChofer" Type="Chofer" IsForeignKey="true" />
+      <Association Name="Lineas_Unidad" Member="Lineas" ThisKey="IdLinea" OtherKey="IdLinea" Type="Lineas" IsForeignKey="true" />
+      <Association Name="Recorridos_Unidad" Member="Recorridos" ThisKey="IdRecorrido" OtherKey="IdRecorrido" Type="Recorridos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuario">
+    <Type Name="Usuario">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Usuario" Member="Usuario1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Contraseña" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Usuario_Cobro" Member="Cobro" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Cobro" />
+      <Association Name="Usuario_Pagos" Member="Pagos" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Pagos" />
+      <Association Name="Rol_Usuario" Member="Rol" ThisKey="IdRol" OtherKey="IdRol" Type="Rol" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Lineas" Member="Lineas">
+    <Type Name="Lineas">
+      <Column Name="IdLinea" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IdRecorido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumLinea" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Lineas_Unidad" Member="Unidad" ThisKey="IdLinea" OtherKey="IdLinea" Type="Unidad" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Recorridos" Member="Recorridos">
+    <Type Name="Recorridos">
+      <Column Name="IdRecorrido" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Origen" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Destino" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Recorridos_Unidad" Member="Unidad" ThisKey="IdRecorrido" OtherKey="IdRecorrido" Type="Unidad" />
+    </Type>
+  </Table>
+  <Function Name="dbo.SP_Actualizar_Cobros" Method="SP_Actualizar_Cobros">
+    <Parameter Name="IdCobro" Parameter="idCobro" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdAfiliado" Parameter="idAfiliado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Total" Parameter="total" Type="System.Decimal" DbType="Decimal(12,2)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Pagos" Method="SP_Actualizar_Pagos">
+    <Parameter Name="IdPago" Parameter="idPago" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Valor" Parameter="valor" Type="System.Decimal" DbType="Decimal(12,2)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Recorridos" Method="SP_Actualizar_Recorridos">
+    <Parameter Name="IdRecorrido" Parameter="idRecorrido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Afiliado" Method="SP_Eliminar_Afiliado">
+    <Parameter Name="IdAfiliado" Parameter="idAfiliado" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Chofer" Method="SP_Eliminar_Chofer">
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Cobros" Method="SP_Eliminar_Cobros">
+    <Parameter Name="IdCobros" Parameter="idCobros" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Linea" Method="SP_Eliminar_Linea">
+    <Parameter Name="IdLinea" Parameter="idLinea" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_LineaRecorrido" Method="SP_Eliminar_LineaRecorrido">
+    <Parameter Name="IdRecorridoLinea" Parameter="idRecorridoLinea" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Pagos" Method="SP_Eliminar_Pagos">
+    <Parameter Name="IdPagos" Parameter="idPagos" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Recorrido" Method="SP_Eliminar_Recorrido">
+    <Parameter Name="IdRecorridos" Parameter="idRecorridos" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Turno" Method="SP_Eliminar_Turno">
+    <Parameter Name="IdTurno" Parameter="idTurno" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_TurnosUnidad" Method="SP_Eliminar_TurnosUnidad">
+    <Parameter Name="IdTurnosUnidad" Parameter="idTurnosUnidad" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Unidad" Method="SP_Eliminar_Unidad">
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Eliminar_Usuario" Method="SP_Eliminar_Usuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Chofer" Method="SP_Insertar_Chofer">
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellido" Parameter="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="TipoLicencia" Parameter="tipoLicencia" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Cobro" Method="SP_Insertar_Cobro">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdAfiliado" Parameter="idAfiliado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Total" Parameter="total" Type="System.Decimal" DbType="Decimal(12,2)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Pagos" Method="SP_Insertar_Pagos">
+    <Parameter Name="Valor" Parameter="valor" Type="System.Decimal" DbType="Decimal(12,2)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarChoferFiltro" Method="SP_ListarChoferFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarChoferFiltroResult">
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Sexo" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="TipoLicencia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Edad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarCobrosFiltro" Method="SP_ListarCobrosFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarCobrosFiltroResult">
+      <Column Name="IdCobros" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdAfiliado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarPermisos" Method="SP_ListarPermisos">
+    <ElementType Name="SP_ListarPermisosResult">
+      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreMenu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarPermisos_Filtro" Method="SP_ListarPermisos_Filtro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(25)" />
+    <ElementType Name="SP_ListarPermisos_FiltroResult">
+      <Column Name="IdPermiso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NombreMenu" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarRecorridosFiltro" Method="SP_ListarRecorridosFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarRecorridosFiltroResult">
+      <Column Name="IdRecorrido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarRoles" Method="SP_ListarRoles">
+    <ElementType Name="SP_ListarRolesResult">
+      <Column Name="IdRol" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarUsuario" Method="SP_ListarUsuario">
+    <ElementType Name="SP_ListarUsuarioResult">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Contraseña" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Chofer" Method="SP_Actualizar_Chofer">
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellido" Parameter="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="TipoLicencia" Parameter="tipoLicencia" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Listar_Lineas" Method="SP_Listar_Lineas">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_Listar_LineasResult">
+      <Column Name="IdLinea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRecorido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumLinea" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Turno" Method="SP_Actualizar_Turno">
+    <Parameter Name="IdTurno" Parameter="idTurno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Tipo" Parameter="tipo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Hora_Inicio" Parameter="hora_Inicio" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Hora_terminacion" Parameter="hora_terminacion" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Turnos" Method="SP_Insertar_Turnos">
+    <Parameter Name="Tipo" Parameter="tipo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Hora_inicio" Parameter="hora_inicio" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Hora_terminacion" Parameter="hora_terminacion" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Listar_Turnos" Method="SP_Listar_Turnos">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_Listar_TurnosResult">
+      <Column Name="IdTurno" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Hora_Inicio" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Hora_terminacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Eliminar_CobroPersonalizado" Method="SP_Eliminar_CobroPersonalizado" IsComposable="true">
+    <Parameter Name="IdCobros" Parameter="idCobros" Type="System.Int32" DbType="Int" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.SP_ListarVistaPersonalizadaCobro" Method="SP_ListarVistaPersonalizadaCobro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarVistaPersonalizadaCobroResult">
+      <Column Name="IdCobros" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="[Nombre Usuario]" Member="Nombre_Usuario" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="IdAfiliado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Eliminar_TurnosUnidadView" Method="SP_Eliminar_TurnosUnidadView" IsComposable="true">
+    <Parameter Name="IdTurnosUnidad" Parameter="idTurnosUnidad" Type="System.Int32" DbType="Int" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Afiliado" Method="SP_Actualizar_Afiliado">
+    <Parameter Name="IdAfiliado" Parameter="idAfiliado" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Direccion" Parameter="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Cedula" Parameter="cedula" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="EstadoCivil" Parameter="estadoCivil" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Afiliado" Method="SP_Insertar_Afiliado">
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Direccion" Parameter="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Cedula" Parameter="cedula" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="EstadoCivil" Parameter="estadoCivil" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarAfiliadosFiltro" Method="SP_ListarAfiliadosFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarAfiliadosFiltroResult">
+      <Column Name="IdAfiliado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Cedula" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Sexo" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Edad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EstadoCivil" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarUsuarioFiltro" Method="SP_ListarUsuarioFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarUsuarioFiltroResult">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Contraseña" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Edad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Sexo" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="FechaIngreso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Usuario" Method="SP_Actualizar_Usuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdRol" Parameter="idRol" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Usuario" Parameter="usuario" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Contraseña" Parameter="contraseña" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellido" Parameter="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Usuario" Method="SP_Insertar_Usuario">
+    <Parameter Name="IdRol" Parameter="idRol" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Usuario" Parameter="usuario" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Contraseña" Parameter="contraseña" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellido" Parameter="apellido" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Edad" Parameter="edad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Sexo" Parameter="sexo" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarViewUsuarioFiltro" Method="SP_ListarViewUsuarioFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarViewUsuarioFiltroResult">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdRol" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Usuario" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Contraseña" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Linea" Method="SP_Actualizar_Linea">
+    <Parameter Name="IdLinea" Parameter="idLinea" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumLinea" Parameter="numLinea" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Linea" Method="SP_Insertar_Linea">
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="NumLinea" Parameter="numLinea" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarLineasFiltro" Method="SP_ListarLineasFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarLineasFiltroResult">
+      <Column Name="IdLinea" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUnidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumLinea" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_RecorridosLineas" Method="SP_Actualizar_RecorridosLineas">
+    <Parameter Name="IdRecorridoLineas" Parameter="idRecorridoLineas" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(500)" />
+    <Parameter Name="Origen" Parameter="origen" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Destino" Parameter="destino" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_RecorridosLineas" Method="SP_Insertar_RecorridosLineas">
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(500)" />
+    <Parameter Name="Origen" Parameter="origen" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Destino" Parameter="destino" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarRecorridoLineas" Method="SP_ListarRecorridoLineas">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarRecorridoLineasResult">
+      <Column Name="IdRecorrido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Origen" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Destino" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_TurnosUnidad" Method="SP_Actualizar_TurnosUnidad">
+    <Parameter Name="IdTurnoUnidad" Parameter="idTurnoUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdTurno" Parameter="idTurno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdRecorrido" Parameter="idRecorrido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_TurnosUnidad" Method="SP_Insertar_TurnosUnidad">
+    <Parameter Name="IdTurno" Parameter="idTurno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdRecorrido" Parameter="idRecorrido" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Fecha" Parameter="fecha" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Listar_TurnosUnidad" Method="SP_Listar_TurnosUnidad">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_Listar_TurnosUnidadResult">
+      <Column Name="IdTurnoUnidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdTurno" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IdUnidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Marca" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Placa" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IdRecorrido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Descripcion_Recorrido" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Hora_Inicio" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Hora_terminacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Actualizar_Unidad" Method="SP_Actualizar_Unidad">
+    <Parameter Name="IdUnidad" Parameter="idUnidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Placa" Parameter="placa" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Modelo" Parameter="modelo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Marca" Parameter="marca" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="FechaFabricacion" Parameter="fechaFabricacion" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Capacidad" Parameter="capacidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_Insertar_Unidad" Method="SP_Insertar_Unidad">
+    <Parameter Name="IdChofer" Parameter="idChofer" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Placa" Parameter="placa" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Modelo" Parameter="modelo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Marca" Parameter="marca" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="FechaFabricacion" Parameter="fechaFabricacion" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="Capcidad" Parameter="capcidad" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Estado" Parameter="estado" Type="System.Boolean" DbType="Bit" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.SP_ListarUnidadFiltro" Method="SP_ListarUnidadFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarUnidadFiltroResult">
+      <Column Name="IdUnidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Placa" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Modelo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Marca" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="FechaFabricacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Capacidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_Listar_ChoferTurnoFiltro" Method="SP_Listar_ChoferTurnoFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_Listar_ChoferTurnoFiltroResult">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Apellido" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Edad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Sexo" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="Placa" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Modelo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Capacidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Hora_Inicio" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Hora_terminacion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Origen" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Destino" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NumLinea" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ListarPagoFiltro" Method="SP_ListarPagoFiltro">
+    <Parameter Name="valor" Type="System.String" DbType="VarChar(250)" />
+    <ElementType Name="SP_ListarPagoFiltroResult">
+      <Column Name="IdPago" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Valor" Type="System.Decimal" DbType="Decimal(12,2)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdChofer" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Fecha" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
